@@ -5,8 +5,9 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import EventIcon from '@mui/icons-material/Event';
+import './App.css';
 
-function TaskList({ onEdit }) {
+function TaskList({ onEdit, onPriorityChange }) {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -127,7 +128,7 @@ function TaskList({ onEdit }) {
           <ListItem 
             key={task.id} 
             sx={{ 
-              pr: 18,
+              pr: 28,
               py: 1,
               mb: 1,
               borderRadius: 2,
@@ -220,6 +221,19 @@ function TaskList({ onEdit }) {
                   }}
                 />
               )}
+              <Box sx={{ display: 'flex', gap: 0.5, alignItems: 'center' }}>
+                {['P1', 'P2', 'P3'].map((p) => (
+                  <button
+                    key={p}
+                    className={`priority-btn${task.priority === p ? ' selected' : ''}`}
+                    onClick={() => onPriorityChange(task.id, p)}
+                    aria-label={`Set priority ${p}`}
+                    aria-pressed={task.priority === p}
+                  >
+                    {p}
+                  </button>
+                ))}
+              </Box>
               <Box 
                 sx={{ 
                   display: 'flex', 
